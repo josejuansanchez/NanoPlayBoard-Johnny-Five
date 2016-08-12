@@ -1,7 +1,7 @@
+// For use with 74HC595 chip
+
 var five = require("johnny-five");
 var board = new five.Board();
-
-// For use with 74HC595 chip
 
 board.on("ready", function() {
   var register = new five.ShiftRegister({
@@ -12,29 +12,38 @@ board.on("ready", function() {
     }
   });
 
-  //2, 4, 5, 16, 17
-  var columns = [ 
-    new five.Pin(2), 
-    new five.Pin(4),
-    new five.Pin(5),
-    new five.Pin(16),
-    new five.Pin(17)
-  ];
+  // Declare and initialize the array for the columns
+  var columnsPins = [2, 4, 5, 16, 17];
+  var columns = new Array(5);
 
-  columns[0].write(2, 1);
-  columns[1].write(4, 1);
-  columns[2].write(5, 1);
-  columns[3].write(16, 1);
-  columns[4].write(17, 1);
+  for(var i = 0; i < columns.length; i++) {
+    columns[i] = new five.Pin(columnsPins[i]);
+  }
 
-  var value = 1;
-  //var values = [0x3f,0x0,0x0,0x0,0x0];
+  var pattern = [8, 18, 16, 18, 8];
   var index = 0;
 
+  /*
   setInterval(function() {
-    value = value > 0x11 ? value >> 1 : 0x88;
-    register.send(value);
-    //register.send(values[index++]);
-    //if (index == 5) index = 0;
-  }, 200);
+    register.send(pattern[index]);
+    columns[index].high();
+    setInterval(function() {}, 2);
+    columns[index].low();
+
+    index++;
+    if (index == pattern.length) index = 0;
+
+  }, 2);
+  */
+
+  this.loop(2, function() {
+    register.send(pattern[index]);
+    columns[index].high();
+    setInterval(function() {}, 2);
+    columns[index].low();
+
+    index++;
+    if (index == pattern.length) index = 0;
+  });
+
 });
