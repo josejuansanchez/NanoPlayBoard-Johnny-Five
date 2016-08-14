@@ -1,11 +1,11 @@
-var lib = require("./lib.js");
-var ascii = lib.ascii;
+var alphabet = require("./alphabet.js");
+var ascii = alphabet.ascii;
 
-// For use with 74HC595 chip
 var five = require("johnny-five");
 var board = new five.Board();
 
 board.on("ready", function() {
+  // For use with 74HC595 chip
   var register = new five.ShiftRegister({
     pins: {
       data: 13,
@@ -14,16 +14,13 @@ board.on("ready", function() {
     }
   });
 
-  // Declare and initialize the array for the columns
-  var columnsPins = [2, 4, 5, 16, 17];
-  var columns = new Array(5);
-
-  for(var i = 0; i < columns.length; i++) {
-    columns[i] = new five.Pin(columnsPins[i]);
-  }
-
-  var pattern = [8, 18, 16, 18, 8];
-  var index = 0;
+  var columns = [
+    new five.Pin(2),
+    new five.Pin(4),
+    new five.Pin(5),
+    new five.Pin(16),
+    new five.Pin(17),
+  ];
 
   function print(message) {
     var pattern = new Array(5);
@@ -34,23 +31,17 @@ board.on("ready", function() {
       pattern[3] = ascii[message.charCodeAt(parseInt((i+3)/5))-0x20][(i+3)%5];
       pattern[4] = ascii[message.charCodeAt(parseInt((i+4)/5))-0x20][(i+4)%5];
 
-      var _scrollSpeed = 10;
-
-      // Display the pattern several times
-      for(var n = 0; n < _scrollSpeed; n++) {
+      for(var index = 0; index < pattern.length; index++) {
         register.send(pattern[index]);
         columns[index].high();
         setInterval(function() {}, 2);
         columns[index].low();
-
-        index++;
-        if (index == pattern.length) index = 0;
       }
     }
   }
 
   this.loop(100, function() {
-    print("H O L A");
+    print(" H O L A");
   });
 
 });
