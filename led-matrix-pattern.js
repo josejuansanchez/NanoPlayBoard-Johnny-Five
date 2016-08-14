@@ -23,19 +23,6 @@ board.on("ready", function() {
   var pattern = [8, 18, 16, 18, 8];
   var index = 0;
 
-  /*
-  setInterval(function() {
-    register.send(pattern[index]);
-    columns[index].high();
-    setInterval(function() {}, 2);
-    columns[index].low();
-
-    index++;
-    if (index == pattern.length) index = 0;
-
-  }, 2);
-  */
-
   this.loop(2, function() {
     register.send(pattern[index]);
     columns[index].high();
