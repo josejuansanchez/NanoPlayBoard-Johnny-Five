@@ -40,7 +40,7 @@ board.on("ready", function() {
     }
   }
 
-  this.loop(100, function() {
+  board.loop(100, function() {
     print(" H O L A");
   });
 

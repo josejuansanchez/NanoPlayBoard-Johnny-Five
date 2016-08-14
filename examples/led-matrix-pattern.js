@@ -28,7 +28,7 @@ board.on("ready", function() {
     }
   }
 
-  this.loop(2, function() {
+  board.loop(2, function() {
     var pattern = [8, 18, 16, 18, 8];
     print(pattern);
   });
