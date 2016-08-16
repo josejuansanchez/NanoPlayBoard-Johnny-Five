@@ -103,10 +103,12 @@
       var socket = io.connect('http://localhost:3000');
 
       socket.on('potentiometer', function(data) {
+        // Create the current point
         var graphPoint = {};
         graphPoint.timestamp = Date.now();
         graphPoint.value = data.raw;
         
+        // Update the set of points
         potChartData[potIndex++ % MAX] = graphPoint;
         potChart.setData(potChartData);
 
@@ -116,10 +118,12 @@
       });
 
       socket.on('photoresistor', function(data) {
+        // Create the current point
         var graphPoint = {};
         graphPoint.timestamp = Date.now();
         graphPoint.value = data.raw;
         
+        // Update the set of points
         ldrChartData[ldrIndex++ % MAX] = graphPoint;
         ldrChart.setData(ldrChartData);
 
@@ -152,18 +156,20 @@
         data: potChartData,
         xkey: 'timestamp',
         ykeys: ['value'],
-        labels: ['Potentiometer']
+        labels: ['Potentiometer'],
+        hideHover: true
       });
-
+      
       var ldrIndex = 0;
       var ldrChartData = [{timestamp:0, value:0}];
 
       var ldrChart = new Morris.Line({
         element: 'ldrchart',
-        data: potChartData,
+        data: ldrChartData,
         xkey: 'timestamp',
         ykeys: ['value'],
-        labels: ['Photoresistor (LDR)']
+        labels: ['Photoresistor (LDR)'],
+        hideHover: true
       });
 
     </script>
