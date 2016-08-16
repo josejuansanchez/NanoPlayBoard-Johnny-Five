@@ -45,7 +45,7 @@
         </div>
 
         <div class="col-md-4">
-        <h4>Value (on-change)</h4>
+        <h4>Donut (on-change)</h4>
         <div id="potdonut" style="height: 250px;"></div>
         </div>
 
@@ -62,6 +62,11 @@
         <div class="col-md-4">
         <h4>Chart (on-change)</h4>
         <div id="ldrchart" style="height: 250px;""></div>
+        </div>
+
+        <div class="col-md-4">
+        <h4>Donut (on-change)</h4>
+        <div id="ldrdonut" style="height: 250px;"></div>
         </div>
 
         <div class="col-md-4">
@@ -149,6 +154,23 @@
         ldrChartData[ldrIndex++ % MAX] = graphPoint;
         ldrChart.setData(ldrChartData);
 
+        // Create the point for the ldr segment
+        var ldrSegment = {};
+        ldrSegment.label = "LDR";
+        ldrSegment.value = data.raw;
+
+        var whiteSegment = {};
+        whiteSegment.label = "";
+        whiteSegment.value = 1023 - data.raw;
+
+        // Update the segments
+        ldrDonutData[0] = ldrSegment;
+        ldrDonutData[1] = whiteSegment;
+        ldrDonut.setData(ldrDonutData);
+
+        // Select the ldr donut segment
+        ldrDonut.select(0);
+
         $("#ldrvalue").html(function() {
           return data.raw;
         });        
@@ -203,6 +225,17 @@
         ykeys: ['value'],
         labels: ['Photoresistor (LDR)'],
         hideHover: true
+      });
+
+      var ldrDonutData = [{label: "LDR", value: 0}];
+
+      var ldrDonut = new Morris.Donut({
+        element: 'ldrdonut',
+        data: ldrDonutData,
+        colors: [
+            '#0B62A4',
+            '#FFFFFF'
+        ]
       });
 
     </script>
