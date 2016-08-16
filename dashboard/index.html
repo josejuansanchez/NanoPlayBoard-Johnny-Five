@@ -31,7 +31,7 @@
 <body>
 
     <div class="container">
-      <h1>NanoPlayBoard</h1>
+      <h1>NanoPlayBoard <span style="color:#E91E63">&#10084;</span> Johnny-Five</h1>
     
       <div class="row">
         <div class="col-md-4">
@@ -78,6 +78,14 @@
         <input type="color" />
         </div>
         -->
+
+        <div class="col-md-4">
+        <h4><img src="images/_buzzer_48x48.png" />Buzzer</h4>
+        </div>
+
+        <div class="col-md-4">
+        <h4><img src="images/_ledmatrix_48x48.png" />LED Matrix</h4>
+        </div>
 
       </div>
     </div>
@@ -186,7 +194,8 @@
         xkey: 'timestamp',
         ykeys: ['value'],
         labels: ['Potentiometer'],
-        hideHover: true
+        hideHover: true,
+        lineColors: [ '#CDDC39' ]
       });
 
       var potDonutData = [{label: "Potentiometer", value: 0}];
@@ -195,7 +204,7 @@
         element: 'potdonut',
         data: potDonutData,
         colors: [
-            '#0B62A4',
+            '#FF7043',
             '#FFFFFF'
         ]
       });
@@ -209,6 +218,7 @@
         ykeys: ['value'],
         labels: ['Potentiometer'],
         hideHover: false,
+        barColors: [ '#2196F3' ],
         ymin: 0,
         ymax: 1023
       });
@@ -222,7 +232,8 @@
         xkey: 'timestamp',
         ykeys: ['value'],
         labels: ['Photoresistor (LDR)'],
-        hideHover: true
+        hideHover: true,
+        lineColors: [ '#FFC107' ]
       });
 
       var ldrDonutData = [{label: "Photoresistor", value: 0}];
@@ -231,7 +242,7 @@
         element: 'ldrdonut',
         data: ldrDonutData,
         colors: [
-            '#0B62A4',
+            '#8BC34A',
             '#FFFFFF'
         ]
       });
@@ -245,6 +256,7 @@
         ykeys: ['value'],
         labels: ['LDR'],
         hideHover: false,
+        barColors: [ '#3F51B5' ],
         ymin: 0,
         ymax: 1023
       });
