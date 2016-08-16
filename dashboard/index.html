@@ -145,7 +145,7 @@
       // Morris.js
       const MAX = 10;
       var potIndex = 0;
-      var potChartData = [];
+      var potChartData = [{timestamp:0, value:0}];
 
       var potChart = new Morris.Line({
         element: 'potchart',
@@ -156,7 +156,7 @@
       });
 
       var ldrIndex = 0;
-      var ldrChartData = [];
+      var ldrChartData = [{timestamp:0, value:0}];
 
       var ldrChart = new Morris.Line({
         element: 'ldrchart',
