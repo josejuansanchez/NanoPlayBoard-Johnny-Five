@@ -46,6 +46,11 @@
 
         <div class="col-md-4">
         <h4>Value (on-change)</h4>
+        <div id="potdonut" style="height: 250px;"></div>
+        </div>
+
+        <div class="col-md-4">
+        <h4>Value (on-change)</h4>
         <div id="potvalue" style="height: 250px;"></div>
         </div>
 
@@ -112,6 +117,23 @@
         potChartData[potIndex++ % MAX] = graphPoint;
         potChart.setData(potChartData);
 
+        // Create the point for the potentiometer segment
+        var potSegment = {};
+        potSegment.label = "Potentiometer";
+        potSegment.value = data.raw;
+
+        var whiteSegment = {};
+        whiteSegment.label = "";
+        whiteSegment.value = 1023 - data.raw;
+
+        // Update the segments
+        potDonutData[0] = potSegment;
+        potDonutData[1] = whiteSegment;
+        potDonut.setData(potDonutData);
+
+        // Select the potentiometer donut segment
+        potDonut.select(0);
+
         $("#potvalue").html(function() {
           return data.raw;
         });
@@ -159,7 +181,18 @@
         labels: ['Potentiometer'],
         hideHover: true
       });
-      
+
+      var potDonutData = [{label: "Potentiometer", value: 0}];
+
+      var potDonut = new Morris.Donut({
+        element: 'potdonut',
+        data: potDonutData,
+        colors: [
+            '#0B62A4',
+            '#FFFFFF'
+        ]
+      });
+
       var ldrIndex = 0;
       var ldrChartData = [{timestamp:0, value:0}];
 
