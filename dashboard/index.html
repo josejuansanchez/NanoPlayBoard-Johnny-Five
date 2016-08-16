@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NanoPlayBoard</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Morris.js -->
+    <link href="css/morris.css" rel="stylesheet" >
+
+    <!-- Epoch -->
+    <link href="css/epoch.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div class="container">
+      <h1>NanoPlayBoard</h1>
+    
+      <div class="row">
+        <div class="col-md-4">
+        <h4>Potentiometer</h4>
+        <img src="images/_potentiometer.png" />
+        </div>
+
+        <div class="col-md-4">
+        <h4>Chart (on-change)</h4>
+        <div id="potchart" style="height: 250px;"></div>
+        </div>
+
+        <div class="col-md-4">
+        <h4>Value (on-change)</h4>
+        <div id="potvalue" style="height: 250px;"></div>
+        </div>
+
+        <div class="col-md-4">
+        <h4>Photoresistor (LDR)</h4>
+        <img src="images/_ldr.png" />
+        </div>
+
+        <div class="col-md-4">
+        <h4>Chart (on-change)</h4>
+        <div id="ldrchart" style="height: 250px;""></div>
+        </div>
+
+        <div class="col-md-4">
+        <h4>Value (on-change)</h4>
+        <div id="ldrvalue" style="height: 250px;"></div>
+        </div>
+
+        <div class="col-md-4">
+        <h4>RGB LED</h4>
+        <img src="images/_ledrgb.png" />
+        </div>
+      
+        <div class="col-md-4">
+        <h4>RGB LED</h4>
+        <p><input type="range" min="0" max="255" class="form-control" id="redValue" name="redValue" value="0" /></p>
+        <p><input type="range" min="0" max="255" class="form-control" id="greenValue" name="greenValue" value="0" /></p>
+        <p><input type="range" min="0" max="255" class="form-control" id="blueValue" name="blueValue" value="0" /></p>
+        <p><button id="rgb" class="btn btn-primary">Set Color</button></p>
+        </div>
+
+        <!--
+        <div class="col-md-4">
+        <h4>RGB LED</h4>        
+        <input type="color" />
+        </div>
+        -->
+
+      </div>
+    </div>
+    <!-- /container -->
+
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="js/raphael-min.js"></script>
+    <script src="js/morris.min.js"></script>
+
+    <!-- Socket IO -->
+    <script src="socket.io/socket.io.js"></script>
+
+    <script>
+      var socket = io.connect('http://localhost:3000');
+
+      socket.on('potentiometer', function(data) {
+        var graphPoint = {};
+        graphPoint.timestamp = Date.now();
+        graphPoint.value = data.raw;
+        
+        potChartData[potIndex++ % MAX] = graphPoint;
+        potChart.setData(potChartData);
+
+        $("#potvalue").html(function() {
+          return data.raw;
+        });
+      });
+
+      socket.on('photoresistor', function(data) {
+        var graphPoint = {};
+        graphPoint.timestamp = Date.now();
+        graphPoint.value = data.raw;
+        
+        ldrChartData[ldrIndex++ % MAX] = graphPoint;
+        ldrChart.setData(ldrChartData);
+
+        $("#ldrvalue").html(function() {
+          return data.raw;
+        });        
+      });
+
+      $('#rgb').on('click', function() {
+        var r = $('#redValue').val();
+        var g = $('#greenValue').val();
+        var b = $('#blueValue').val();
+
+        r = ("0" + parseInt(r,10).toString(16)).slice(-2);
+        g = ("0" + parseInt(g,10).toString(16)).slice(-2);
+        b = ("0" + parseInt(b,10).toString(16)).slice(-2);
+
+        var color = "#" + r + g + b;
+        
+        socket.emit('rgb',{color:color});
+      });
+
+      // Morris.js
+      const MAX = 10;
+      var potIndex = 0;
+      var potChartData = [];
+
+      var potChart = new Morris.Line({
+        element: 'potchart',
+        data: potChartData,
+        xkey: 'timestamp',
+        ykeys: ['value'],
+        labels: ['Potentiometer']
+      });
+
+      var ldrIndex = 0;
+      var ldrChartData = [];
+
+      var ldrChart = new Morris.Line({
+        element: 'ldrchart',
+        data: potChartData,
+        xkey: 'timestamp',
+        ykeys: ['value'],
+        labels: ['Photoresistor (LDR)']
+      });
+
+    </script>
+
+</body>
+
+</html>
