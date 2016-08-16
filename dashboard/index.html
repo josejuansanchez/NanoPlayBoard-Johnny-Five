@@ -35,52 +35,37 @@
     
       <div class="row">
         <div class="col-md-4">
-        <h4>Potentiometer</h4>
-        <img src="images/_potentiometer.png" />
-        </div>
-
-        <div class="col-md-4">
-        <h4>Chart (on-change)</h4>
+        <h4><img src="images/_potentiometer_48x48.png" />Potentiometer Chart</h4>
         <div id="potchart" style="height: 250px;"></div>
         </div>
 
         <div class="col-md-4">
-        <h4>Donut (on-change)</h4>
+        <h4><img src="images/_potentiometer_48x48.png" />Potentiometer Donut</h4>
         <div id="potdonut" style="height: 250px;"></div>
         </div>
 
         <div class="col-md-4">
-        <h4>Value (on-change)</h4>
-        <div id="potvalue" style="height: 250px;"></div>
+        <h4><img src="images/_potentiometer_48x48.png" />Potentiometer Bar</h4>
+        <div id="potbar" style="height: 250px;"></div>
         </div>
 
         <div class="col-md-4">
-        <h4>Photoresistor (LDR)</h4>
-        <img src="images/_ldr.png" />
-        </div>
-
-        <div class="col-md-4">
-        <h4>Chart (on-change)</h4>
+        <h4><img src="images/_ldr_48x48.png" />LDR Chart</h4>
         <div id="ldrchart" style="height: 250px;""></div>
         </div>
 
         <div class="col-md-4">
-        <h4>Donut (on-change)</h4>
+        <h4><img src="images/_ldr_48x48.png" />LDR Donut</h4>
         <div id="ldrdonut" style="height: 250px;"></div>
         </div>
 
         <div class="col-md-4">
-        <h4>Value (on-change)</h4>
-        <div id="ldrvalue" style="height: 250px;"></div>
+        <h4><img src="images/_ldr_48x48.png" />LDR Bar</h4>
+        <div id="ldrbar" style="height: 250px;"></div>
         </div>
 
         <div class="col-md-4">
-        <h4>RGB LED</h4>
-        <img src="images/_ledrgb.png" />
-        </div>
-      
-        <div class="col-md-4">
-        <h4>RGB LED</h4>
+        <h4><img src="images/_ledrgb_48x48.png" />RGB LED</h4>
         <p><input type="range" min="0" max="255" class="form-control" id="redValue" name="redValue" value="0" /></p>
         <p><input type="range" min="0" max="255" class="form-control" id="greenValue" name="greenValue" value="0" /></p>
         <p><input type="range" min="0" max="255" class="form-control" id="blueValue" name="blueValue" value="0" /></p>
@@ -139,9 +124,9 @@
         // Select the potentiometer donut segment
         potDonut.select(0);
 
-        $("#potvalue").html(function() {
-          return data.raw;
-        });
+        // Update the bar chart
+        potBarData[0] = potSegment;
+        potBar.setData(potBarData);
       });
 
       socket.on('photoresistor', function(data) {
@@ -156,7 +141,7 @@
 
         // Create the point for the ldr segment
         var ldrSegment = {};
-        ldrSegment.label = "LDR";
+        ldrSegment.label = "Photoresistor";
         ldrSegment.value = data.raw;
 
         var whiteSegment = {};
@@ -171,9 +156,9 @@
         // Select the ldr donut segment
         ldrDonut.select(0);
 
-        $("#ldrvalue").html(function() {
-          return data.raw;
-        });        
+        // Update the bar chart
+        ldrBarData[0] = ldrSegment;
+        ldrBar.setData(ldrBarData);
       });
 
       $('#rgb').on('click', function() {
@@ -215,6 +200,19 @@
         ]
       });
 
+      var potBarData = [{label: 'Potentiometer', value: 100}];
+
+      var potBar = new Morris.Bar({
+        element: 'potbar',
+        data: potBarData,
+        xkey: 'label',
+        ykeys: ['value'],
+        labels: ['Potentiometer'],
+        hideHover: false,
+        ymin: 0,
+        ymax: 1023
+      });
+
       var ldrIndex = 0;
       var ldrChartData = [{timestamp:0, value:0}];
 
@@ -227,7 +225,7 @@
         hideHover: true
       });
 
-      var ldrDonutData = [{label: "LDR", value: 0}];
+      var ldrDonutData = [{label: "Photoresistor", value: 0}];
 
       var ldrDonut = new Morris.Donut({
         element: 'ldrdonut',
@@ -237,6 +235,20 @@
             '#FFFFFF'
         ]
       });
+
+      var ldrBarData = [{label: 'LDR', value: 100}];
+
+      var ldrBar = new Morris.Bar({
+        element: 'ldrbar',
+        data: ldrBarData,
+        xkey: 'label',
+        ykeys: ['value'],
+        labels: ['LDR'],
+        hideHover: false,
+        ymin: 0,
+        ymax: 1023
+      });
+
 
     </script>
 
