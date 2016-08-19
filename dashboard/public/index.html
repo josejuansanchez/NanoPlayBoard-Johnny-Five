@@ -69,15 +69,12 @@
         <p><input type="range" min="0" max="255" class="form-control" id="redValue" name="redValue" value="0" /></p>
         <p><input type="range" min="0" max="255" class="form-control" id="greenValue" name="greenValue" value="0" /></p>
         <p><input type="range" min="0" max="255" class="form-control" id="blueValue" name="blueValue" value="0" /></p>
-        <p><button id="rgb" class="btn btn-primary">Set Color</button></p>
         </div>
 
-        <!--
         <div class="col-md-4">
-        <h4>RGB LED</h4>        
-        <input type="color" />
+        <h4><img src="images/_ledrgb_48x48.png" />RGB LED</h4>
+        <input type="color" id="colorPicker" />
         </div>
-        -->
 
         <div class="col-md-4">
         <h4><img src="images/_buzzer_48x48.png" />Buzzer</h4>
@@ -169,7 +166,7 @@
         ldrBar.setData(ldrBarData);
       });
 
-      $('#rgb').on('click', function() {
+      function changeColorRGB() {
         var r = $('#redValue').val();
         var g = $('#greenValue').val();
         var b = $('#blueValue').val();
@@ -180,6 +177,23 @@
 
         var color = "#" + r + g + b;
         
+        socket.emit('rgb',{color:color});
+      }
+
+      $('#redValue').on('change', function() {
+        changeColorRGB();
+      });
+
+      $('#greenValue').on('change', function() {
+        changeColorRGB();
+      });
+
+      $('#blueValue').on('change', function() {
+        changeColorRGB();
+      });
+
+      $('#colorPicker').on('change', function() {
+        var color = this.value;
         socket.emit('rgb',{color:color});
       });
 
