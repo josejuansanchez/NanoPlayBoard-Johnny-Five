@@ -13,7 +13,7 @@ var board = new five.Board();
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-  fs.readFile(__dirname + '/index.html', function (error, data) {
+  fs.readFile(__dirname + '/public/index.html', function (error, data) {
     if (error) {
       res.writeHead(404);
       res.write("Not Found");
