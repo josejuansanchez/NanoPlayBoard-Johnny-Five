@@ -34,21 +34,18 @@ board.on("ready", function() {
 
 io.sockets.on('connection', function(socket) {
  
-  if (board.isReady) {
-    potentiometer.on("change", function(){
-      socket.emit('potentiometer', { raw: this.raw });
-    });
+  if (board.isReady === false) return;
 
-    photoresistor.on("change", function(){
-      socket.emit('photoresistor', { raw: this.raw });
-    });
-  }
+  potentiometer.on("change", function(){
+    socket.emit('potentiometer', { raw: this.raw });
+  });
+
+  photoresistor.on("change", function(){
+    socket.emit('photoresistor', { raw: this.raw });
+  });
 
   socket.on('rgb', function(data) {
-    if (board.isReady) {
-      led.on();
-      led.color(data.color);
-    } 
+    led.color(data.color);
   });
 
 });
