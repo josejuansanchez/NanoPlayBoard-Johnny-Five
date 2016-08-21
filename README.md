@@ -13,7 +13,8 @@ This repository includes a simple dashboard developed using [Socket.io][8], [Exp
 ![Dashboard][10]
 
 ## Credits
-* [Songs for Johnny-Five Piezo class][6] have been developed by [Julian Duque, Brian Genisio][7].
+* The examples used in this repository are based on the [examples][11] provided by [Rick Waldron][12].
+* [Songs for Johnny-Five Piezo class][6] have been developed by [Julian Duque][7].
 
 ## License
 
@@ -42,4 +43,6 @@ limitations under the License.
 [7]: http://github.com/julianduque
 [8]: http://socket.io
 [9]: http://expressjs.com
-[10]: https://github.com/josejuansanchez/NanoPlayBoard-Johnny-Five/blob/master/extras/nanoplayboard-dashboard-j5.gif
+[10]: http://github.com/josejuansanchez/NanoPlayBoard-Johnny-Five/blob/master/extras/nanoplayboard-dashboard-j5.gif
+[11]: http://github.com/rwaldron/johnny-five
+[12]: http://github.com/rwaldron
