@@ -1,0 +1,29 @@
+{
+  "name": "NanoPlayBoard-Johnny-Five",
+  "version": "0.0.1",
+  "description": "Experiments with NanoPlayBoard & Johnny-Five",
+  "homepage": "https://github.com/josejuansanchez/NanoPlayBoard-Johnny-Five",
+  "bugs": "https://github.com/josejuansanchez/NanoPlayBoard-Johnny-Five/issues",
+  "author": {
+    "name": "José Juan Sánchez",
+    "url": "http://josejuansanchez.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/josejuansanchez/NanoPlayBoard-Johnny-Five"
+  },
+  "license": "GPL-3.0",
+  "keywords": [
+    "nanoplayboard",
+    "johnny-five",    
+    "arduino"
+  ],
+  "dependencies": {
+    "j5-songs": "0.0.9",
+    "johnny-five": "^0.10.0",
+    "keypress": "^0.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }  
+}
