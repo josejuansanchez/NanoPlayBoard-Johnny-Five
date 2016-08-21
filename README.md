@@ -43,6 +43,6 @@ limitations under the License.
 [7]: http://github.com/julianduque
 [8]: http://socket.io
 [9]: http://expressjs.com
-[10]: http://github.com/josejuansanchez/NanoPlayBoard-Johnny-Five/blob/master/extras/nanoplayboard-dashboard-j5.gif
+[10]: https://github.com/josejuansanchez/NanoPlayBoard-Johnny-Five/blob/master/extras/nanoplayboard-dashboard-j5.gif
 [11]: http://github.com/rwaldron/johnny-five
 [12]: http://github.com/rwaldron
