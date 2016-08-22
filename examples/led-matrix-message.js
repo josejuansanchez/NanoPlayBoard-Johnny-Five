@@ -5,7 +5,6 @@ var five = require("johnny-five");
 var board = new five.Board();
 
 board.on("ready", function() {
-  // For use with 74HC595 chip
   var register = new five.ShiftRegister({
     pins: {
       data: 13,
@@ -34,15 +33,13 @@ board.on("ready", function() {
       for(var index = 0; index < pattern.length; index++) {
         register.send(pattern[index]);
         columns[index].high();
-        setInterval(function() {}, 2);
         columns[index].low();
       }
     }
   }
 
   board.loop(100, function() {
-    print(" H O L A");
+    print(" N a n o P l a y B o a r d ");
   });
 
 });
-
