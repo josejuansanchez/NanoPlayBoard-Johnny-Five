@@ -75,6 +75,7 @@
 
         <div class="col-md-4">
         <h4><img src="images/_buzzer_48x48.png" />Buzzer</h4>
+        <p><input type="range" min="0" max="40000" class="form-control" id="frequencyInput" name="frequencyInput" value="0" /></p>
         </div>
 
         <div class="col-md-4">
@@ -193,6 +194,13 @@
         var color = this.value;
         socket.emit('rgb',{color:color});
       });
+
+      $('#frequencyInput').on('change', function() {
+        var frequency = $('#frequencyInput').val();
+        frequency = parseInt(frequency, 10);
+        socket.emit('frequency',{frequency:frequency});
+      });
+
 
       // Morris.js
       const MAX = 10;

@@ -8,6 +8,7 @@ var five = require("johnny-five");
 var led;
 var potentiometer;
 var photoresistor;
+var piezo;
 var board = new five.Board();
 
 app.use(express.static(__dirname + '/public'));
@@ -29,7 +30,8 @@ app.get('/', function (req, res) {
 board.on("ready", function() {
   led = new five.Led.RGB([9,10,11]);  
   potentiometer = new five.Sensor("A1");
-  photoresistor = new five.Sensor("A0");  
+  photoresistor = new five.Sensor("A0");
+  piezo = new five.Piezo(3);
 });
 
 io.sockets.on('connection', function(socket) {
@@ -46,6 +48,10 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('rgb', function(data) {
     led.color(data.color);
+  });
+
+  socket.on('frequency', function(data) {
+    piezo.tone(data.frequency, 250);
   });
 
 });
