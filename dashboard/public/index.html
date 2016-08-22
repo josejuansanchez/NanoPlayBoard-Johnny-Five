@@ -63,9 +63,9 @@
 
         <div class="col-md-4">
         <h4><img src="images/_ledrgb_48x48.png" />RGB LED</h4>
-        <p><input type="range" min="0" max="255" class="form-control" id="redValue" name="redValue" value="0" /></p>
-        <p><input type="range" min="0" max="255" class="form-control" id="greenValue" name="greenValue" value="0" /></p>
-        <p><input type="range" min="0" max="255" class="form-control" id="blueValue" name="blueValue" value="0" /></p>
+        <p><input type="range" min="0" max="255" class="form-control" id="redInput" name="redInput" value="0" /></p>
+        <p><input type="range" min="0" max="255" class="form-control" id="greenInput" name="greenInput" value="0" /></p>
+        <p><input type="range" min="0" max="255" class="form-control" id="blueInput" name="blueInput" value="0" /></p>
         </div>
 
         <div class="col-md-4">
@@ -165,9 +165,9 @@
       });
 
       function changeColorRGB() {
-        var r = $('#redValue').val();
-        var g = $('#greenValue').val();
-        var b = $('#blueValue').val();
+        var r = $('#redInput').val();
+        var g = $('#greenInput').val();
+        var b = $('#blueInput').val();
 
         r = ("0" + parseInt(r,10).toString(16)).slice(-2);
         g = ("0" + parseInt(g,10).toString(16)).slice(-2);
@@ -178,15 +178,15 @@
         socket.emit('rgb',{color:color});
       }
 
-      $('#redValue').on('change', function() {
+      $('#redInput').on('change', function() {
         changeColorRGB();
       });
 
-      $('#greenValue').on('change', function() {
+      $('#greenInput').on('change', function() {
         changeColorRGB();
       });
 
-      $('#blueValue').on('change', function() {
+      $('#blueInput').on('change', function() {
         changeColorRGB();
       });
 
